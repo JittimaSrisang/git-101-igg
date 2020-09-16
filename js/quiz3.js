@@ -1,14 +1,25 @@
-const num =  90 ;
-if (num >= 81 && num <= 100){
-    return "A"
-}else if (num >= 71 && num <=80){
-    return "B"
-}else if (num >= 61 && num <=70){
-    return "C"
-}else if (num >= 51 && num <=60){
-    return "D"
-}else {
-    return "F"
+let point = 0
+
+const calculateGrade = (point) => {
+    let grade = null
+    if (point >= 81 && point <= 100){
+        grade = "A"
+    }
+    else if (point >= 71 && point <=80){
+        grade = "B"
+    }
+    else if (point >= 61 && point <=70){
+        grade = "C"
+    }
+    else if (point >= 51 && point <=60){
+        grade = "D"
+    }
+    else if (point >= 0 && point <=50){
+        grade = "F"
+    }else {
+        grade = "Point was invalid"
+    }
+    return grade
 }
 
-console.log(num)
+console.log(calculateGrade(99))
