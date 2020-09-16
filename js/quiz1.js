@@ -3,7 +3,7 @@ let Profile = {
     lastname: "Srisang",
     age: 21,
     nickname: "Cake",
-    hobby: "read book",
+    hobby: "reading a book",
     phonenumber: "099-892XXXX"
 }
 console.log(Profile)
