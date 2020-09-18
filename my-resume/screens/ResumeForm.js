@@ -1,17 +1,20 @@
 import React from 'react'
 import ValidationComponent from 'react-native-form-validator'
-import { View, StyleSheet, Text, TextInput, Button, Alert } from 'react-native'
+import { ScrollView, View, StyleSheet, Text, TextInput, Button, Alert, Platform } from 'react-native'
 import axios from 'axios'
+import Camera from './components/Camera'
 
 export default class ResumeForm extends ValidationComponent{
     state ={
         name: '',
         nickname: '',
         age: '',
-        skill:  ''
+        skill:  '',
+        avatar: '',
     }
     _onSubmit = () => {
         const isValid =  this.validate({
+            avatar: {required: true},
             name: { required: true},
             nickname: { required: true},
             age: { required: true, numbers: true },
@@ -19,6 +22,12 @@ export default class ResumeForm extends ValidationComponent{
         });
         if(isValid){
             const formData = new FormData();
+            const uri = this.state.avatar
+            formData.append('avatar', {
+                uri: Platform.OS === 'android' ? uri : uri.replace('file://', ''),
+                type: 'image/jpeg',
+                name: 'avatar.jpg'
+            })
             formData.append('name', this.state.name)
             formData.append('nickname', this.state.nickname)
             formData.append('age', this.state.age)
@@ -45,12 +54,13 @@ export default class ResumeForm extends ValidationComponent{
     }
     render(){
         return (
-            <View style= {styles.container}>
+            <ScrollView style= {styles.container}>
                 {/* Show */}
                 <View>
                     <Text style={styles.getErrorMessages}>
                         {this.getErrorMessages()}
                     </Text>
+                    <Camera onTakePicture ={(pictureUri) => {this.setState ({ avatar: pictureUri }) }} />
                 </View>
                 {/* Full Name */}
                 <View>
@@ -94,13 +104,13 @@ export default class ResumeForm extends ValidationComponent{
                 </View>
 
                 {/* Button */}
-                <View style={{marginTop: 20}}>
+                <View style={{marginTop: 20, marginBottom: 80 }}>
                     <Button 
                     title='Create Resume' 
                     onPress={this._onSubmit}  
                     ></Button>
                 </View>
-            </View>
+            </ScrollView>
         )
     }
 }
