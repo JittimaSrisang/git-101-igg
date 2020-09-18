@@ -1,0 +1,58 @@
+import React, { useState, useEffect }  from 'react'
+import axios from 'axios'
+import { StyleSheet, View, Text} from 'react-native'
+
+export default(props)=>{
+    const [resume, setResume] = useState({ 
+        name: '', 
+        nickname: '', 
+        age: '', 
+        skill: ''
+    })
+
+    useEffect(() => {
+        const id = props.route.params.id
+        axios.get(`https://movie-api.igeargeek.com/users/profile/${id}`)
+        .then((res) => {
+            console.log('res', res.data)
+            setResume(res.data)
+        }).catch((error) => {
+            console.log('error',error)
+        })
+    }, [])
+    return (
+        <View style={styles.container}>
+            {/* Full Name */}
+            <View style={styles.textLine}>
+                <Text>Full Name: {resume.name}</Text>
+            </View>
+
+            {/* Nickname */}
+            <View style={styles.textLine}>
+                <Text>Nickname: {resume.nickname}</Text>
+            </View>
+
+            {/* Age */}
+            <View style={styles.textLine}>
+                <Text>Age: {resume.age}</Text>
+            </View>
+
+            {/* Skill */}
+            <View style={styles.textLine}>
+                <Text>Skill: {resume.skill}</Text>
+            </View>
+
+        </View>
+    )
+}
+// style
+const styles = StyleSheet.create({
+    container: {
+        padding: 30,
+        backgroundColor: 'white',
+        minHeight: '100%'
+    },
+    textLine: {
+        marginBottom: 20,
+    }
+})
