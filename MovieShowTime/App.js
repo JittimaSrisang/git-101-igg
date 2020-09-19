@@ -1,37 +1,50 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react'
+import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer } from '@react-navigation/native'
+import { StyleSheet } from 'react-native';
+import MoviesList from './screens/MoviesList'
+import MovieDetail from './screens/MovieDetail';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <View style ={{ flex: 1, flexDirection: 'row'}}>
-        <View style= {{flex: 1, backgroundColor: 'yellow' }} />
-        <View style= {{flex: 1, backgroundColor: 'black' }} />
-        <View style= {{flex: 1, backgroundColor: 'pink' }} />
-        <View style= {{flex: 1, backgroundColor: 'red' }} />
-      </View>
+const Stack = createStackNavigator();
 
-      <View style ={{ flex: 1, flexDirection: 'row'}}>
-        <View style= {{flex: 1, backgroundColor: 'black' }} />
-        <View style= {{flex: 1, backgroundColor: 'pink' }} />
-        <View style= {{flex: 1, backgroundColor: 'red' }} />
-        <View style= {{flex: 1, backgroundColor: 'yellow' }} />
-      </View>
+const Navigation = () => (
+  <NavigationContainer>
+    <Stack.Navigator
+      screenOptions = {
+        {
+          headerStyle: {
+            backgroundColor: 'black',
+            shadowOpacity: 0
+          },
+          headerTintColor: 'white'
+        }
+      }
+      >
+      <Stack.Screen
+        name="MoviesList"
+        options={
+          {
+            title: 'Movie Show Time Example'
+          }
+        }
+        component={MoviesList}
+      />
+      <Stack.Screen
+        name="MovieDetail"
+        component={MovieDetail}
+        options={
+          {
+            title: null
+          }
+        }
+      />
+    </Stack.Navigator>
+  </NavigationContainer>
+)
 
-      <View style ={{ flex: 1, flexDirection: 'row'}}>
-        <View style= {{flex: 1, backgroundColor: 'pink' }} />
-        <View style= {{flex: 1, backgroundColor: 'red' }} />
-        <View style= {{flex: 1, backgroundColor: 'yellow' }} />
-        <View style= {{flex: 1, backgroundColor: 'black' }} />
-      </View>
-    </View>
-  );
-}
-
+export default Navigation
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
-    backgroundColor: '#fff'
+    flex: 1,
   },
 });
